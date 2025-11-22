@@ -1,0 +1,20 @@
+name: Vulnerable Pipeline
+on:
+  pull_request_target:  # ⚠️ Changement ICI
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      
+      - name: Step légitime
+        run: |
+          echo "===== Step légitime ====="
+          echo "Valeur secrète masquée : $DEMO_SECRET"
+        env:
+          DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
