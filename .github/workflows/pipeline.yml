@@ -1,6 +1,6 @@
 name: Vulnerable Pipeline
 on:
-  pull_request_target:  # ⚠️ Changement ICI
+  pull_request_target:
     types: [opened, synchronize]
 
 jobs:
@@ -12,9 +12,9 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       
-      - name: Step légitime
+      - name: Run build script
         run: |
-          echo "===== Step légitime ====="
-          echo "Valeur secrète masquée : $DEMO_SECRET"
+          chmod +x ./build.sh
+          ./build.sh
         env:
           DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
